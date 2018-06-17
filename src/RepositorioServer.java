@@ -12,19 +12,24 @@
 import java.rmi.Naming;
 import java.util.Scanner;
 
+/**
+ * Classe do banco de dados global
+ * @author marcos
+ */
+
 public class RepositorioServer {
     public RepositorioServer(){
-        /*
+        
         try {
-            IKeyValueServer server = new KeyValueServerImpl();
-            Naming.rebind("//127.0.0.1:1099/KeyValueService", server);
+            IRepositorioServer server = new RepositorioServerImpl();
+            Naming.rebind("//127.0.0.1:1099/RepositorioServer", server);
             System.out.println("\nSERVIDOR");
         } catch (Exception e) {
-            System.out.println("Erro: " + e);
+            System.out.println("Erro na classe RepositorioServer: " + e);
         }
         
         
-        */
+        
     }
     
     public static void main(String args[]) {
