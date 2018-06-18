@@ -12,8 +12,6 @@
 import java.rmi.RemoteException;
 
 public interface IRepositorioServer extends java.rmi.Remote{
-    //public String retornaDados(String login)
-            //throws java.rmi.RemoteException;
     
     public String consultarSaldo(int numConta)
             throws java.rmi.RemoteException;
@@ -26,4 +24,8 @@ public interface IRepositorioServer extends java.rmi.Remote{
             
     public void realizarTransferencia(int numConta1, int numConta2, float valorTransferencia)
             throws java.rmi.RemoteException;
+    
+    public Conta encontraConta(Integer numConta)
+            throws java.rmi.RemoteException;
+    
 }

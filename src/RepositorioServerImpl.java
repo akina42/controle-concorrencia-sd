@@ -92,7 +92,10 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
         contas.get(numConta2).setSaldo(saldoConta2);
     }
     
-    //metodo de gerenciamento de bloqueio
+    public Conta encontraConta(Integer numConta){
+        Conta conta = this.contas.get(numConta);
+        return conta;
+    }
     
 }
 
