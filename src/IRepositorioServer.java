@@ -13,16 +13,16 @@ import java.rmi.RemoteException;
 
 public interface IRepositorioServer extends java.rmi.Remote{
     
-    public String consultarSaldo(int numConta)
+    public String consultarSaldo(int numConta, int id)
             throws java.rmi.RemoteException;
     
-    public float realizarDeposito(int numConta, float deposito)
+    public float realizarDeposito(int numConta, float deposito, int id)
             throws java.rmi.RemoteException;
     
-    public float realizarSaque(int numConta, float saque)
+    public float realizarSaque(int numConta, float saque, int id)
             throws java.rmi.RemoteException;
             
-    public void realizarTransferencia(int numConta1, int numConta2, float valorTransferencia)
+    public void realizarTransferencia(int numConta1, int numConta2, float valorTransferencia, int id)
             throws java.rmi.RemoteException;
     
     public Conta encontraConta(Integer numConta)
