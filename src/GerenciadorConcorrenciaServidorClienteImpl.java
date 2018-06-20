@@ -11,6 +11,7 @@
 
 import java.rmi.Naming;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 public class GerenciadorConcorrenciaServidorClienteImpl extends java.rmi.server.UnicastRemoteObject implements IGerenciadorConcorrenciaServidorCliente{
     public GerenciadorConcorrenciaServidorClienteImpl()
@@ -41,8 +42,23 @@ public class GerenciadorConcorrenciaServidorClienteImpl extends java.rmi.server.
     }
     
     
-    public void recebeDadosEntrada(int opcao){
-                
+   public void recebeDadosEntradaAlteracao(int opcao, int idCliente,
+            ArrayList<Integer> contasSelecionadas, float valor){
+
+        contasSelecionadas.stream().forEach(conta ->{
+            System.out.println("Teste");
+        });
+
+    }
+
+
+    public void recebeDadosEntradaConsulta(int opcao, int idCliente,
+            ArrayList<Integer> contasSelecionadas){
+
+        contasSelecionadas.stream().forEach(conta ->{
+            System.out.println("Teste");
+        });
+
     }
         
     

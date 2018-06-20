@@ -1,5 +1,6 @@
 
 import java.rmi.Naming;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -13,10 +14,11 @@ public class Cliente1 {
         int id = 1;
         int conta, contadest;
         float valor;
+        ArrayList<Integer> contasSelecionadas;
         
         try{
             
-            IRepositorioServer repositorio = (IRepositorioServer) Naming.lookup("//127.0.0.1:1099/RepositorioServer");
+            IGerenciadorConcorrenciaServidorCliente gerenciador = (IGerenciadorConcorrenciaServidorCliente) Naming.lookup("//127.0.0.1:1099/GerenciadorConcorrenciaServidorCliente");
             Scanner entrada = new Scanner(System.in);
             
             System.out.println("\tBEM VINDO! \n SELECIONE A OPERAÇÃO QUE DESEJA REALIZAR: ");
@@ -31,20 +33,22 @@ public class Cliente1 {
             switch(opcao){
                 case 1: System.out.println("\tPor favor, digite o numero da conta: \n");
                         conta = entrada.nextInt();
-                        repositorio.consultarSaldo(conta, id);
+                        //contasSelecionadas.add(id);
+                        //gerenciador.recebeDadosEntradaConsulta(opcao, id, contasSelecionadas);
+                        //repositorio.consultarSaldo(conta, id);
                         break;
                 case 2: System.out.println("\tPor favor, digite o numero da conta: \n");
                         conta = entrada.nextInt();
                         System.out.println("\tQual o valor que deseja depositar?: \n");
                         valor = entrada.nextFloat();
-                        repositorio.realizarDeposito(conta, valor, id);
+                        //repositorio.realizarDeposito(conta, valor, id);
                         break;
                 case 3: 
                         System.out.println("\tPor favor, digite o numero da conta: \n");
                         conta = entrada.nextInt();
                         System.out.println("\tQual o valor que deseja sacar?: \n");
                         valor = entrada.nextFloat();
-                        repositorio.realizarSaque(conta, valor, id);
+                        //repositorio.realizarSaque(conta, valor, id);
                         break;
                 case 4: System.out.println("\tPor favor, digite o numero da conta remetente: \n");
                         conta = entrada.nextInt();
@@ -52,7 +56,7 @@ public class Cliente1 {
                         contadest = entrada.nextInt();
                         System.out.println("\tQual o valor que deseja transferir?: \n");
                         valor = entrada.nextFloat();
-                        repositorio.realizarTransferencia(conta, contadest, valor, id);
+                        //repositorio.realizarTransferencia(conta, contadest, valor, id);
                         break;
                 case 5: System.out.println("\tAté mais!\n"); break;
                 default: System.out.println("\tPor favor, digite uma opção válida!\n");
