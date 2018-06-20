@@ -17,6 +17,7 @@ public class Conta {
     private float saldo;
     private boolean bloqueadoLeitura;
     private boolean bloqueadoEscrita;
+    private Fila fila = new Fila();
     
 
     public Conta() {
@@ -77,10 +78,14 @@ public class Conta {
     public void setBloqueadoEscrita(boolean bloqueadoEscrita) {
         this.bloqueadoEscrita = bloqueadoEscrita;
     }
-    
-    
-    
-    
-    
+
+    public Fila getFila() {
+        return fila;
+    }
+
+    public void setFila(Fila fila) {
+        this.fila = fila;
+    }
+
     
 }

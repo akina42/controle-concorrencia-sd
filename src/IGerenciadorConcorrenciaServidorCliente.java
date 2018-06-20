@@ -14,7 +14,10 @@ import java.util.ArrayList;
 
 public interface IGerenciadorConcorrenciaServidorCliente extends java.rmi.Remote{
     
-     public Boolean verificaBloqueioConta(int numConta)
+     public Boolean verificaBloqueioEscritaConta(int numConta)
+            throws java.rmi.RemoteException;
+     
+     public Boolean verificaBloqueioLeituraConta(int numConta)
             throws java.rmi.RemoteException;
      
      public void recebeDadosEntradaAlteracao(int opcao, int idCliente,
