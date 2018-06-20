@@ -10,36 +10,29 @@
  */
 
 import java.rmi.Naming;
-import java.security.NoSuchAlgorithmException;
+
 import java.util.ArrayList;
+import java.util.Map;
+
 
 public class GerenciadorConcorrenciaServidorClienteImpl extends java.rmi.server.UnicastRemoteObject implements IGerenciadorConcorrenciaServidorCliente{
     public GerenciadorConcorrenciaServidorClienteImpl()
             throws java.rmi.RemoteException {
         super();
     }
-    
-    public Boolean verificaBloqueioConta(int numConta){
+
+    public Boolean verificaBloqueioEscritaConta(int numConta){
         Boolean estaBloqueadoEscrita = true;
-        Boolean estaBloqueadoLeitura = true;
         try{
-            IRepositorioServer repositorio = 
+            IRepositorioServer repositorio =
                     (IRepositorioServer) Naming.lookup("//127.0.0.1:1099/RepositorioServer");
             Conta conta = repositorio.encontraConta(numConta);
             estaBloqueadoEscrita = conta.isBloqueadoEscrita();
-            estaBloqueadoLeitura = conta.isBloqueadoLeitura();            
         }
         catch(Exception e){
             System.out.println("Conta inexistente. Erro ao acessar: " + e);
         }
-        
-        //TODO em que momento vou diferenciar esse bloqueio? implementar outro método?
-        
-        if(estaBloqueadoEscrita || estaBloqueadoLeitura){
-            return true;
-        }
-        return false;
-    }
+
     
     
    public void recebeDadosEntradaAlteracao(int opcao, int idCliente,
@@ -65,4 +58,7 @@ public class GerenciadorConcorrenciaServidorClienteImpl extends java.rmi.server.
     
     
 }
+
+
+  
 
