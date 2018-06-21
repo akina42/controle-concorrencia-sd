@@ -34,6 +34,7 @@ public class GerenciadorConcorrenciaServidorClienteImpl
         requisicao.setOpcaoOperacao(opcao);
         requisicao.setIdCliente(idCliente);
         requisicao.setValor(valor);
+        //requisicao.setContasSelecionadas(idContasSelecionadas);
         
         try {
             repositorio = (IRepositorioServer) 

@@ -14,6 +14,7 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
     public RepositorioServerImpl()
             throws java.rmi.RemoteException {
         super();
+        preencheRepositorio();
     }
     
     
@@ -95,6 +96,38 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
     public Conta encontraConta(Integer numConta){
         Conta conta = this.contas.get(numConta);
         return conta;
+    }
+    
+    private void preencheRepositorio(){
+        Conta conta1 = new Conta();
+        conta1.setNumConta(123);
+        conta1.setNomeBanco("Banco do Brasil");
+        conta1.setNumAgencia(001);
+        conta1.setNomeCliente("Akina Kurita");
+        conta1.setSaldo(1000);
+        conta1.setBloqueadoLeitura(false);
+        conta1.setBloqueadoEscrita(false);
+        contas.put(conta1.getNumConta(), conta1);
+        
+        Conta conta2 = new Conta();
+        conta2.setNumConta(456);
+        conta2.setNomeBanco("Banco do Brasil");
+        conta2.setNumAgencia(002);
+        conta2.setNomeCliente("Marcos Brunelli");
+        conta2.setSaldo(1000);
+        conta2.setBloqueadoLeitura(false);
+        conta2.setBloqueadoEscrita(false);
+        contas.put(conta2.getNumConta(), conta2);
+        
+        Conta conta3 = new Conta();
+        conta3.setNumConta(789);
+        conta3.setNomeBanco("Banco do Brasil");
+        conta3.setNumAgencia(001);
+        conta3.setNomeCliente("Leonardo Guerra");
+        conta3.setSaldo(1000);
+        conta3.setBloqueadoLeitura(false);
+        conta3.setBloqueadoEscrita(false);
+        contas.put(conta3.getNumConta(), conta3);
     }
     
 }

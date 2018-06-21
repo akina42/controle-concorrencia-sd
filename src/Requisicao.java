@@ -15,7 +15,7 @@ public class Requisicao {
     
     private Integer opcaoOperacao;
     private Integer idCliente;
-    private ArrayList<Conta> contasSelecionadas = new ArrayList<>();
+    private ArrayList<Conta> contasSelecionadas = new ArrayList<>(); //tipo conta?
     private float valor;
     
     public Requisicao(){
