@@ -12,9 +12,9 @@ public class Cliente1 {
     public Cliente1() {
         
         int id = 1;
-        int conta, contadest;
-        float valor;
-        ArrayList<Integer> contasSelecionadas = new ArrayList<Integer>();
+        int conta=0, contadest=0;
+        float valor=0;
+        ArrayList<Integer> contasSelecionadas = new ArrayList<>();
         
         try{
             
@@ -34,15 +34,16 @@ public class Cliente1 {
                 case 1: System.out.println("\tPor favor, digite o numero da conta: \n");
                         conta = entrada.nextInt();
                         contasSelecionadas.add(conta);
-                        gerenciador.recebeDadosCliente(opcao, id, contasSelecionadas, 0);
-                        
+                        System.out.println("conta digitada: " + conta);
+                        System.out.println("conta inserida: " + contasSelecionadas.get(0));
+                        gerenciador.recebeDadosCliente(1, id, contasSelecionadas, 0);
                         break;
                 case 2: System.out.println("\tPor favor, digite o numero da conta: \n");
                         conta = entrada.nextInt();
                         System.out.println("\tQual o valor que deseja depositar?: \n");
                         valor = entrada.nextFloat();
                         contasSelecionadas.add(conta);
-                        gerenciador.recebeDadosCliente(opcao, id, contasSelecionadas, valor);
+                        gerenciador.recebeDadosCliente(2, id, contasSelecionadas, valor);
                         
                         break;
                 case 3: 
@@ -51,7 +52,7 @@ public class Cliente1 {
                         System.out.println("\tQual o valor que deseja sacar?: \n");
                         valor = entrada.nextFloat();
                         contasSelecionadas.add(conta);
-                        gerenciador.recebeDadosCliente(opcao, id, contasSelecionadas, valor);
+                        gerenciador.recebeDadosCliente(3, id, contasSelecionadas, valor);
                         
                         break;
                 case 4: System.out.println("\tPor favor, digite o numero da conta remetente: \n");
@@ -62,7 +63,7 @@ public class Cliente1 {
                         valor = entrada.nextFloat();
                         contasSelecionadas.add(conta);
                         contasSelecionadas.add(contadest);
-                        gerenciador.recebeDadosCliente(opcao, id, contasSelecionadas, valor);
+                        gerenciador.recebeDadosCliente(4, id, contasSelecionadas, valor);
                         
                         break;
                 case 5: System.out.println("\tAté mais!\n"); break;

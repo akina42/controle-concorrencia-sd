@@ -28,4 +28,7 @@ public interface IRepositorioServer extends java.rmi.Remote{
     public Conta encontraConta(Integer numConta)
             throws java.rmi.RemoteException;
     
+    public void preencheRepositorio()
+            throws java.rmi.RemoteException;
+    
 }

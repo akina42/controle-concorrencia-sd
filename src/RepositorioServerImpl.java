@@ -14,7 +14,7 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
     public RepositorioServerImpl()
             throws java.rmi.RemoteException {
         super();
-        preencheRepositorio();
+        //preencheRepositorio();
     }
     
     
@@ -98,7 +98,7 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
         return conta;
     }
     
-    private void preencheRepositorio(){
+    public void preencheRepositorio(){
         Conta conta1 = new Conta();
         conta1.setNumConta(123);
         conta1.setNomeBanco("Banco do Brasil");
@@ -128,6 +128,11 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
         conta3.setBloqueadoLeitura(false);
         conta3.setBloqueadoEscrita(false);
         contas.put(conta3.getNumConta(), conta3);
+        
+        
+            System.out.println("Contas:" + conta1.getNumConta() + "-" + conta2.getNumConta()
+                    + "-" + conta3.getNumConta() + "\n");
+        
     }
     
 }
