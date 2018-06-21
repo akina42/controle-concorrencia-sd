@@ -13,19 +13,28 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public interface IGerenciadorConcorrenciaServidorCliente extends java.rmi.Remote{
+   
+     public void recebeDadosCliente(int opcao, int idCliente,
+            ArrayList<Integer> idContasSelecionadas, float valor)
+            throws java.rmi.RemoteException;
+     
+     public void executaRequisicao(Requisicao requisicao, 
+            IRepositorioServer repositorio) 
+            throws RemoteException, InterruptedException;
+     
+    public void enfileiraRequisicao(Requisicao requisicao, 
+            IRepositorioServer repositorio) 
+            throws InterruptedException, RemoteException; 
     
-     public Boolean verificaBloqueioEscritaConta(int numConta)
+    public Boolean retornaVerdadeiroSeRequisicaoLiberadaEscrita(Requisicao requisicao)
             throws java.rmi.RemoteException;
-     
-     public Boolean verificaBloqueioLeituraConta(int numConta)
+    
+    public Boolean retornaVerdadeiroSeRequisicaoLiberadaLeitura(Requisicao requisicao)
             throws java.rmi.RemoteException;
-     
-     public void recebeDadosEntradaAlteracao(int opcao, int idCliente,
-            ArrayList<Integer> contasSelecionadas, float valor)
-            throws java.rmi.RemoteException;
-             
-    public void recebeDadosEntradaConsulta(int opcao, int idCliente,
-            ArrayList<Integer> contasSelecionadas)
-            throws java.rmi.RemoteException;
-     
+    
+    public void verificaFila(Fila fila, 
+            IRepositorioServer repositorio) 
+            throws InterruptedException, RemoteException;
+            
+
 }

@@ -24,7 +24,7 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
      * @param numConta
      * @return dadosConta
      */
-    public String consultarSaldo(int numConta, int id){
+    public String consultarSaldo(int numConta){
         String dadosConta = 
                 "Numero da Conta: " + contas.get(numConta).getNumConta() + "\n" +
                 "Cliente: " + contas.get(numConta).getNomeCliente() + "\n" +
@@ -46,7 +46,7 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
      * @return saldo
      */
     
-    public float realizarDeposito(int numConta, float deposito, int id){
+    public float realizarDeposito(int numConta, float deposito){
         float saldo;
         
         saldo = contas.get(numConta).getSaldo();
@@ -65,7 +65,7 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
      * @param saque
      * @return saldo
      */
-    public float realizarSaque(int numConta, float saque, int id){
+    public float realizarSaque(int numConta, float saque){
         float saldo;
         
         saldo = contas.get(numConta).getSaldo();
@@ -84,7 +84,7 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
      * @param numConta2
      * @param valorTransferencia 
      */
-    public void realizarTransferencia(int numConta1, int numConta2, float valorTransferencia, int id){
+    public void realizarTransferencia(int numConta1, int numConta2, float valorTransferencia){
         
         float saldoConta1 = contas.get(numConta1).getSaldo() - valorTransferencia;
         float saldoConta2 = contas.get(numConta2).getSaldo() + valorTransferencia;

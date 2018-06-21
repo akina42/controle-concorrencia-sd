@@ -14,17 +14,24 @@ import java.util.List;
  */
 public class Fila {
 
-  private List<Object> objetos = new LinkedList<Object>();
+  private List<Requisicao> requisicoes = new LinkedList<>();
+  
+  public Fila(){
+  } 
+      
+  public void insereRequisicao(Requisicao requisicao) {
+    this.requisicoes.add(requisicao);
+  } 
 
-  public void insereRequisicao(Object objeto) {
-    this.objetos.add(objeto);
-  }
-
-  public Object removeRequisicao() {
-    return this.objetos.remove(0);
+  public Requisicao removeRequisicao() {
+    return this.requisicoes.remove(0);
   }
 
   public boolean verificaListaVazia() {
-    return this.objetos.size() == 0;
+    return this.requisicoes.size() == 0;
+  }
+  
+  public Requisicao retornaPrimeiroFila(){
+      return this.requisicoes.get(0);
   }
 }
