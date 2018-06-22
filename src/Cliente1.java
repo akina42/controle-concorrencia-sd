@@ -10,33 +10,33 @@ import java.util.Scanner;
  */
 public class Cliente1 {
     public Cliente1() {
-        
-        int id = 1;
-        int conta=0, contadest=0;
-        float valor=0;
-        ArrayList<Integer> contasSelecionadas = new ArrayList<>();
-        
+
         try{
             
             IGerenciadorConcorrenciaServidorCliente gerenciador = (IGerenciadorConcorrenciaServidorCliente) Naming.lookup("//127.0.0.1:1099/GerenciadorConcorrenciaServidorCliente");
             Scanner entrada = new Scanner(System.in);
             
-            System.out.println("\tBEM VINDO! \n SELECIONE A OPERAÇÃO QUE DESEJA REALIZAR: ");
-            System.out.println("\t1 - Consultar Saldo\n");
-            System.out.println("\t2 - Realizar Depósito\n");
-            System.out.println("\t3 - Realizar Saque\n");
-            System.out.println("\t4 - Realizar Transferência\n");
-            System.out.println("\t5 - Sair\n");
-            System.out.println("Por favor, digite sua opção: ");
+            int id = 1;
+            int conta=0, contadest=0;
+            float valor=0;
+            ArrayList<Integer> contasSelecionadas = new ArrayList<>();
+            
+            System.out.println("\n\tBEM VINDO! \n\t SELECIONE A OPERAÇÃO QUE DESEJA REALIZAR: \n");
+            System.out.println("\t1 - Consultar Saldo");
+            System.out.println("\t2 - Realizar Depósito");
+            System.out.println("\t3 - Realizar Saque");
+            System.out.println("\t4 - Realizar Transferência");
+            System.out.println("\t5 - Sair");
+            System.out.println("\tPor favor, digite sua opção: ");
             int opcao = entrada.nextInt();
             
             switch(opcao){
                 case 1: System.out.println("\tPor favor, digite o numero da conta: \n");
                         conta = entrada.nextInt();
                         contasSelecionadas.add(conta);
+                        gerenciador.recebeDadosCliente(1, id, contasSelecionadas, 0);
                         System.out.println("conta digitada: " + conta);
                         System.out.println("conta inserida: " + contasSelecionadas.get(0));
-                        gerenciador.recebeDadosCliente(1, id, contasSelecionadas, 0);
                         break;
                 case 2: System.out.println("\tPor favor, digite o numero da conta: \n");
                         conta = entrada.nextInt();

@@ -9,7 +9,7 @@ import java.util.TreeMap;
 public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject implements IRepositorioServer{
     
     //TreeMap para salvar as contas, com a chave sendo o numConta (numero da conta)
-    Map<Integer,Conta> contas = new TreeMap<Integer,Conta>();
+    Map<Integer,Conta> contas = new TreeMap<>();
     
     public RepositorioServerImpl()
             throws java.rmi.RemoteException {
@@ -24,17 +24,19 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
      * Bloqueio em modo compartilhado, outra transação pode também obter o readlock. 
      * @param numConta
      * @return dadosConta
+     * @throws java.rmi.RemoteException
      */
-    public String consultarSaldo(int numConta){
-        String dadosConta = 
-                "Numero da Conta: " + contas.get(numConta).getNumConta() + "\n" +
-                "Cliente: " + contas.get(numConta).getNomeCliente() + "\n" +
-                "Banco: " + contas.get(numConta).getNomeBanco() + "\n" +
-                "Agencia: " + contas.get(numConta).getNumAgencia() + "\n" +
-                "------------------------- -- ------------------------\n" +
-                "SALDO: " + contas.get(numConta).getSaldo() + "\n\n";
-        
-        return dadosConta;
+    public String consultarSaldo(int numConta)
+        throws java.rmi.RemoteException{
+            String dadosConta = 
+                    "Numero da Conta: " + contas.get(numConta).getNumConta() + "\n" +
+                    "Cliente: " + contas.get(numConta).getNomeCliente() + "\n" +
+                    "Banco: " + contas.get(numConta).getNomeBanco() + "\n" +
+                    "Agencia: " + contas.get(numConta).getNumAgencia() + "\n" +
+                    "------------------------- -- ------------------------\n" +
+                    "SALDO: " + contas.get(numConta).getSaldo() + "\n\n";
+
+            return dadosConta;
     }
     
     /**
@@ -47,14 +49,15 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
      * @return saldo
      */
     
-    public float realizarDeposito(int numConta, float deposito){
-        float saldo;
-        
-        saldo = contas.get(numConta).getSaldo();
-        saldo = saldo + deposito;
-        contas.get(numConta).setSaldo(saldo); //atualiza saldo
-        
-        return saldo;
+    public float realizarDeposito(int numConta, float deposito)
+        throws java.rmi.RemoteException{
+            float saldo;
+
+            saldo = contas.get(numConta).getSaldo();
+            saldo = saldo + deposito;
+            contas.get(numConta).setSaldo(saldo); //atualiza saldo
+
+            return saldo;
     }
     
     /**
@@ -66,14 +69,15 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
      * @param saque
      * @return saldo
      */
-    public float realizarSaque(int numConta, float saque){
-        float saldo;
-        
-        saldo = contas.get(numConta).getSaldo();
-        saldo = saldo - saque;
-        contas.get(numConta).setSaldo(saldo); //atualiza saldo
-        
-        return saldo;
+    public float realizarSaque(int numConta, float saque)
+        throws java.rmi.RemoteException{
+            float saldo;
+
+            saldo = contas.get(numConta).getSaldo();
+            saldo = saldo - saque;
+            contas.get(numConta).setSaldo(saldo); //atualiza saldo
+
+            return saldo;
     }
     
     
@@ -85,20 +89,22 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
      * @param numConta2
      * @param valorTransferencia 
      */
-    public void realizarTransferencia(int numConta1, int numConta2, float valorTransferencia){
-        
-        float saldoConta1 = contas.get(numConta1).getSaldo() - valorTransferencia;
-        float saldoConta2 = contas.get(numConta2).getSaldo() + valorTransferencia;
-        contas.get(numConta1).setSaldo(saldoConta1);
-        contas.get(numConta2).setSaldo(saldoConta2);
+    public void realizarTransferencia(int numConta1, int numConta2, float valorTransferencia)
+        throws java.rmi.RemoteException{
+            float saldoConta1 = contas.get(numConta1).getSaldo() - valorTransferencia;
+            float saldoConta2 = contas.get(numConta2).getSaldo() + valorTransferencia;
+            contas.get(numConta1).setSaldo(saldoConta1);
+            contas.get(numConta2).setSaldo(saldoConta2);
     }
     
-    public Conta encontraConta(Integer numConta){
-        Conta conta = this.contas.get(numConta);
-        return conta;
+    public Conta encontraConta(Integer numConta)
+        throws java.rmi.RemoteException{
+            Conta conta = this.contas.get(numConta);
+            return conta;
     }
     
-    public void preencheRepositorio(){
+    public void preencheRepositorio()
+        throws java.rmi.RemoteException{
         Conta conta1 = new Conta();
         conta1.setNumConta(123);
         conta1.setNomeBanco("Banco do Brasil");

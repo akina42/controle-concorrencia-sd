@@ -9,7 +9,6 @@
  * @author akina
  */
 
-import java.rmi.RemoteException;
 
 public interface IRepositorioServer extends java.rmi.Remote{
     
