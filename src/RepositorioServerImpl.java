@@ -100,44 +100,47 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
     public Conta encontraConta(Integer numConta)
         throws java.rmi.RemoteException{
             Conta conta = this.contas.get(numConta);
+            System.out.println("Teste: encontrou a conta no método encontraConta: " + 
+                                conta.getNumConta() + "\nCliente: " + conta.getNomeCliente()); //apagar depois
             return conta;
     }
     
     public void preencheRepositorio()
         throws java.rmi.RemoteException{
-        Conta conta1 = new Conta();
-        conta1.setNumConta(123);
-        conta1.setNomeBanco("Banco do Brasil");
-        conta1.setNumAgencia(001);
-        conta1.setNomeCliente("Akina Kurita");
-        conta1.setSaldo(1000);
-        conta1.setBloqueadoLeitura(false);
-        conta1.setBloqueadoEscrita(false);
-        contas.put(conta1.getNumConta(), conta1);
         
-        Conta conta2 = new Conta();
-        conta2.setNumConta(456);
-        conta2.setNomeBanco("Banco do Brasil");
-        conta2.setNumAgencia(002);
-        conta2.setNomeCliente("Marcos Brunelli");
-        conta2.setSaldo(1000);
-        conta2.setBloqueadoLeitura(false);
-        conta2.setBloqueadoEscrita(false);
-        contas.put(conta2.getNumConta(), conta2);
-        
-        Conta conta3 = new Conta();
-        conta3.setNumConta(789);
-        conta3.setNomeBanco("Banco do Brasil");
-        conta3.setNumAgencia(001);
-        conta3.setNomeCliente("Leonardo Guerra");
-        conta3.setSaldo(1000);
-        conta3.setBloqueadoLeitura(false);
-        conta3.setBloqueadoEscrita(false);
-        contas.put(conta3.getNumConta(), conta3);
-        
-        
-            System.out.println("Contas:" + conta1.getNumConta() + "-" + conta2.getNumConta()
-                    + "-" + conta3.getNumConta() + "\n");
+            Conta conta1 = new Conta();
+            conta1.setNumConta(123);
+            conta1.setNomeBanco("Banco do Brasil");
+            conta1.setNumAgencia(001);
+            conta1.setNomeCliente("Akina Kurita");
+            conta1.setSaldo(1000);
+            conta1.setBloqueadoLeitura(false);
+            conta1.setBloqueadoEscrita(false);
+            contas.put(conta1.getNumConta(), conta1);
+
+            Conta conta2 = new Conta();
+            conta2.setNumConta(456);
+            conta2.setNomeBanco("Banco do Brasil");
+            conta2.setNumAgencia(002);
+            conta2.setNomeCliente("Marcos Brunelli");
+            conta2.setSaldo(1000);
+            conta2.setBloqueadoLeitura(false);
+            conta2.setBloqueadoEscrita(false);
+            contas.put(conta2.getNumConta(), conta2);
+
+            Conta conta3 = new Conta();
+            conta3.setNumConta(789);
+            conta3.setNomeBanco("Banco do Brasil");
+            conta3.setNumAgencia(001);
+            conta3.setNomeCliente("Leonardo Guerra");
+            conta3.setSaldo(1000);
+            conta3.setBloqueadoLeitura(false);
+            conta3.setBloqueadoEscrita(false);
+            contas.put(conta3.getNumConta(), conta3);
+
+            System.out.println("Repositorio Preenchido com dados!");
+            //System.out.println("Contas:" + conta1.getNumConta() + "-" + conta2.getNumConta()
+              //      + "-" + conta3.getNumConta() + "\n");
         
     }
     

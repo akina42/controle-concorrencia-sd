@@ -11,12 +11,13 @@
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IGerenciadorConcorrenciaServidorCliente extends java.rmi.Remote{
    
      public void recebeDadosCliente(int opcao, int idCliente,
-            ArrayList<Integer> idContasSelecionadas, float valor)
-            throws java.rmi.RemoteException;
+          ArrayList<Integer> idContasSelecionadas, float valor)
+            throws RemoteException;
      
      public void executaRequisicao(Requisicao requisicao, 
             IRepositorioServer repositorio) 
@@ -35,6 +36,9 @@ public interface IGerenciadorConcorrenciaServidorCliente extends java.rmi.Remote
     public void verificaFila(Fila fila, 
             IRepositorioServer repositorio) 
             throws InterruptedException, RemoteException;
+    
+    /*public void testeDadoRecebido(int valor, int id, ArrayList<Integer> array, float val)
+            throws RemoteException;*/
             
 
 }

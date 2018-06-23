@@ -12,12 +12,15 @@
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GerenciadorConcorrenciaServidorClienteImpl 
         extends java.rmi.server.UnicastRemoteObject 
         implements IGerenciadorConcorrenciaServidorCliente{
+    
+    
     
     public GerenciadorConcorrenciaServidorClienteImpl()
             throws java.rmi.RemoteException {
@@ -27,38 +30,35 @@ public class GerenciadorConcorrenciaServidorClienteImpl
     //TODO melhorar o código, muitas partes repetidas, deixar mais claro
     
     public void recebeDadosCliente(int opcao, int idCliente,
-            ArrayList<Integer> idContasSelecionadas, float valor) 
+             ArrayList<Integer> idContasSelecionadas, float valor) 
             throws RemoteException{ 
-        IRepositorioServer repositorio = null;
-        Requisicao requisicao = null;
-        requisicao.setOpcaoOperacao(opcao);
-        requisicao.setIdCliente(idCliente);
-        requisicao.setValor(valor);
-        //requisicao.setContasSelecionadas(idContasSelecionadas);
         
         try {
-            repositorio = (IRepositorioServer) 
-                    Naming.lookup("//127.0.0.1:1099/RepositorioServer");   
+            
+            Requisicao requisicao = new Requisicao();
+            requisicao.setOpcaoOperacao(opcao);
+            requisicao.setIdCliente(idCliente);
+            requisicao.setValor(valor);
+            //Conta conta = new Conta();
+            
+            IRepositorioServer repositorio = (IRepositorioServer) 
+                    Naming.lookup("//127.0.0.1:1099/RepositorioServer");
+            
+            for(Integer idConta : idContasSelecionadas){
+                
+                    Conta conta = repositorio.encontraConta(idConta);
+                    requisicao.getContasSelecionadas().add(conta);
+                    //acredito que o erro seja aqui, testar...
+                  
+            }
+        
+            executaRequisicao(requisicao, repositorio);
+            
         }
         catch(Exception e){
             System.out.println("Erro ao inicializar a requisicao no gerenciador: " + e);
         }
         
-        for(Integer idConta : idContasSelecionadas){
-            try {
-                Conta conta = repositorio.encontraConta(idConta);
-                requisicao.getContasSelecionadas().add(conta);
-            } catch (RemoteException ex) {
-                Logger.getLogger(GerenciadorConcorrenciaServidorClienteImpl.class.getName())
-                    .log(Level.SEVERE, null, ex);
-            } 
-        }
-        
-        try {
-            executaRequisicao(requisicao, repositorio);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(GerenciadorConcorrenciaServidorClienteImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     
@@ -156,4 +156,11 @@ public class GerenciadorConcorrenciaServidorClienteImpl
             }
         }
     }
+    
+    /*public void testeDadoRecebido(int valor, int id, ArrayList<Integer> array, float val)
+        throws RemoteException{
+            System.out.println("Dado recebido: " + valor + id + array.get(0) + val);
+    }*/
+    
+
 }
