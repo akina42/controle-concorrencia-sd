@@ -24,7 +24,7 @@ public interface IRepositorioServer extends java.rmi.Remote{
     public void realizarTransferencia(int numConta1, int numConta2, float valorTransferencia)
             throws java.rmi.RemoteException;
     
-    public Conta encontraConta(Integer numConta)
+    public Conta encontraConta(int numConta)
             throws java.rmi.RemoteException;
     
     public void preencheRepositorio()

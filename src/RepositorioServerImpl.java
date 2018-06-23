@@ -35,6 +35,7 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
                     "Agencia: " + contas.get(numConta).getNumAgencia() + "\n" +
                     "------------------------- -- ------------------------\n" +
                     "SALDO: " + contas.get(numConta).getSaldo() + "\n\n";
+            System.out.println(dadosConta);
 
             return dadosConta;
     }
@@ -97,9 +98,9 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
             contas.get(numConta2).setSaldo(saldoConta2);
     }
     
-    public Conta encontraConta(Integer numConta)
+    public Conta encontraConta(int numConta)
         throws java.rmi.RemoteException{
-            Conta conta = this.contas.get(numConta);
+            Conta conta = contas.get(numConta);
             System.out.println("Teste: encontrou a conta no método encontraConta: " + 
                                 conta.getNumConta() + "\nCliente: " + conta.getNomeCliente()); //apagar depois
             return conta;

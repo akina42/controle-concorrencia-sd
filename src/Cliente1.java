@@ -24,6 +24,7 @@ public class Cliente1 {
             int id = 1;
             int conta=0, contadest=0;
             float valor=0;
+            String consulta;
             
             System.out.println("\n\tBEM VINDO! \n\t SELECIONE A OPERAÇÃO QUE DESEJA REALIZAR: \n");
             System.out.println("\t1 - Consultar Saldo");
