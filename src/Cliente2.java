@@ -10,7 +10,7 @@ import java.util.Scanner;
  *
  * @author marcos
  */
-public class Cliente1 {
+public class Cliente2 {
     
 
     public static void main(String[] args){ 

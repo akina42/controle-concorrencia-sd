@@ -29,9 +29,11 @@ public class GerenciadorConcorrenciaServidorClienteImpl
     
     //TODO melhorar o código, muitas partes repetidas, deixar mais claro
     
-    public void recebeDadosCliente(int opcao, int idCliente,
+    public String recebeDadosCliente(int opcao, int idCliente,
              ArrayList<Integer> idContasSelecionadas, float valor) 
             throws RemoteException{ 
+        
+        String retorno = "";
         
         try {
             
@@ -39,7 +41,6 @@ public class GerenciadorConcorrenciaServidorClienteImpl
             requisicao.setOpcaoOperacao(opcao);
             requisicao.setIdCliente(idCliente);
             requisicao.setValor(valor);
-            //Conta conta = new Conta();
             
             IRepositorioServer repositorio = (IRepositorioServer) 
                     Naming.lookup("//127.0.0.1:1099/RepositorioServer");
@@ -48,29 +49,33 @@ public class GerenciadorConcorrenciaServidorClienteImpl
                 
                     Conta conta = repositorio.encontraConta(idConta);
                     requisicao.getContasSelecionadas().add(conta);
-                    //acredito que o erro seja aqui, testar...
                   
             }
         
-            executaRequisicao(requisicao, repositorio);
+            retorno = executaRequisicao(requisicao, repositorio);
             
         }
         catch(Exception e){
             System.out.println("Erro ao inicializar a requisicao no gerenciador: " + e);
         }
         
+        return retorno;
+        
     }
 
     
-    public void executaRequisicao(Requisicao requisicao, 
+    public String executaRequisicao(Requisicao requisicao, 
             IRepositorioServer repositorio) throws RemoteException, InterruptedException{
+        
+        String retorno = "OK";
         
         //se a operação for de consulta
         if((requisicao.getOpcaoOperacao() == 1) &&
                 retornaVerdadeiroSeRequisicaoLiberadaLeitura(requisicao)){
             requisicao.getContasSelecionadas().get(0).setBloqueadoLeitura(true);
-            repositorio.consultarSaldo(requisicao.getContasSelecionadas().get(0).getNumConta());
+            retorno = repositorio.consultarSaldo(requisicao.getContasSelecionadas().get(0).getNumConta());
             requisicao.getContasSelecionadas().get(0).setBloqueadoLeitura(false);
+            
         }
         
         //se for outro tipo de operação
@@ -106,6 +111,8 @@ public class GerenciadorConcorrenciaServidorClienteImpl
         else{
             enfileiraRequisicao(requisicao, repositorio);
         }
+        
+        return retorno;
     }
 
     public void enfileiraRequisicao(Requisicao requisicao, 

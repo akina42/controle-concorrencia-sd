@@ -15,11 +15,11 @@ import java.util.List;
 
 public interface IGerenciadorConcorrenciaServidorCliente extends java.rmi.Remote{
    
-     public void recebeDadosCliente(int opcao, int idCliente,
+     public String recebeDadosCliente(int opcao, int idCliente,
           ArrayList<Integer> idContasSelecionadas, float valor)
             throws RemoteException;
      
-     public void executaRequisicao(Requisicao requisicao, 
+     public String executaRequisicao(Requisicao requisicao, 
             IRepositorioServer repositorio) 
             throws RemoteException, InterruptedException;
      

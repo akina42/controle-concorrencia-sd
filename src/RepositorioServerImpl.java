@@ -14,7 +14,6 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
     public RepositorioServerImpl()
             throws java.rmi.RemoteException {
         super();
-        //preencheRepositorio();
     }
     
     
@@ -29,13 +28,13 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
     public String consultarSaldo(int numConta)
         throws java.rmi.RemoteException{
             String dadosConta = 
-                    "Numero da Conta: " + contas.get(numConta).getNumConta() + "\n" +
+                    "\n\nNumero da Conta: " + contas.get(numConta).getNumConta() + "\n" +
                     "Cliente: " + contas.get(numConta).getNomeCliente() + "\n" +
                     "Banco: " + contas.get(numConta).getNomeBanco() + "\n" +
                     "Agencia: " + contas.get(numConta).getNumAgencia() + "\n" +
                     "------------------------- -- ------------------------\n" +
                     "SALDO: " + contas.get(numConta).getSaldo() + "\n\n";
-            System.out.println(dadosConta);
+            //System.out.println(dadosConta);
 
             return dadosConta;
     }
@@ -101,8 +100,8 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
     public Conta encontraConta(int numConta)
         throws java.rmi.RemoteException{
             Conta conta = contas.get(numConta);
-            System.out.println("Teste: encontrou a conta no método encontraConta: " + 
-                                conta.getNumConta() + "\nCliente: " + conta.getNomeCliente()); //apagar depois
+            //System.out.println("Teste: encontrou a conta no método encontraConta: " + 
+               //                 conta.getNumConta() + "\nCliente: " + conta.getNomeCliente()); //apagar depois
             return conta;
     }
     
