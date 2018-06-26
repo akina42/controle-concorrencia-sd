@@ -17,11 +17,12 @@ public class Cliente2 {
 
         try{
             
-            IGerenciadorConcorrenciaServidorCliente gerenciador = (IGerenciadorConcorrenciaServidorCliente) Naming.lookup("//127.0.0.1:1099/GerenciadorConcorrenciaServidorCliente");
+            //IGerenciadorConcorrenciaServidorCliente gerenciador = (IGerenciadorConcorrenciaServidorCliente) Naming.lookup("//127.0.0.1:1099/GerenciadorConcorrenciaServidorCliente");
+            IRepositorioServer repositorio = (IRepositorioServer) Naming.lookup("//127.0.0.1:1099/RepositorioServer");
             Scanner entrada = new Scanner(System.in);
             
             ArrayList<Integer> contasSelecionadas = new ArrayList<>();
-            int id = 1;
+            int id = 2;
             int conta=0, contadest=0;
             float valor=0;
             String consulta;
@@ -39,7 +40,7 @@ public class Cliente2 {
                 case 1: System.out.println("\tPor favor, digite o numero da conta: ");
                         conta = entrada.nextInt();
                         contasSelecionadas.add(conta);
-                        System.out.println(gerenciador.recebeDadosCliente(1, id, contasSelecionadas, 0));
+                        System.out.println(repositorio.recebeDadosCliente(1, id, contasSelecionadas, 0));
                         break;
                         
                 case 2: System.out.println("\tPor favor, digite o numero da conta: ");
@@ -47,7 +48,7 @@ public class Cliente2 {
                         System.out.println("\tQual o valor que deseja depositar?: ");
                         valor = entrada.nextFloat();
                         contasSelecionadas.add(conta);
-                        gerenciador.recebeDadosCliente(2, id, contasSelecionadas, valor);
+                        repositorio.recebeDadosCliente(2, id, contasSelecionadas, valor);
                         System.out.println("\n\tDepósito de " + valor +" realizado com sucesso!\n");
                         break;
                 case 3: 
@@ -56,7 +57,7 @@ public class Cliente2 {
                         System.out.println("\tQual o valor que deseja sacar?: ");
                         valor = entrada.nextFloat();
                         contasSelecionadas.add(conta);
-                        gerenciador.recebeDadosCliente(3, id, contasSelecionadas, valor);
+                        repositorio.recebeDadosCliente(3, id, contasSelecionadas, valor);
                         System.out.println("\n\tSaque de " + valor +" realizado com sucesso! Retire seu dinheiro\n");
                         
                         break;
@@ -68,7 +69,7 @@ public class Cliente2 {
                         valor = entrada.nextFloat();
                         contasSelecionadas.add(conta);
                         contasSelecionadas.add(contadest);
-                        gerenciador.recebeDadosCliente(4, id, contasSelecionadas, valor);
+                        repositorio.recebeDadosCliente(4, id, contasSelecionadas, valor);
                         System.out.println("Transferência de " + valor + " da conta de número " + conta +
                                 " para a conta de número " + contadest + " realizada com sucesso!\n");
                         

@@ -1,4 +1,7 @@
 
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -9,11 +12,12 @@ import java.util.TreeMap;
 public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject implements IRepositorioServer{
     
     //TreeMap para salvar as contas, com a chave sendo o numConta (numero da conta)
-    Map<Integer,Conta> contas = new TreeMap<>();
+    Map<Integer,Conta> contas;
     
     public RepositorioServerImpl()
             throws java.rmi.RemoteException {
         super();
+        contas = new TreeMap<>();
     }
     
     
@@ -26,7 +30,7 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
      * @throws java.rmi.RemoteException
      */
     public String consultarSaldo(int numConta)
-        throws java.rmi.RemoteException{
+        throws java.rmi.RemoteException, InterruptedException{
             String dadosConta = 
                     "\n\nNumero da Conta: " + contas.get(numConta).getNumConta() + "\n" +
                     "Cliente: " + contas.get(numConta).getNomeCliente() + "\n" +
@@ -35,6 +39,8 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
                     "------------------------- -- ------------------------\n" +
                     "SALDO: " + contas.get(numConta).getSaldo() + "\n\n";
             //System.out.println(dadosConta);
+            
+            Thread.sleep(10000);
 
             return dadosConta;
     }
@@ -50,11 +56,12 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
      */
     
     public float realizarDeposito(int numConta, float deposito)
-        throws java.rmi.RemoteException{
+        throws java.rmi.RemoteException, InterruptedException{
             float saldo;
 
             saldo = contas.get(numConta).getSaldo();
             saldo = saldo + deposito;
+            Thread.sleep(10000);
             contas.get(numConta).setSaldo(saldo); //atualiza saldo
 
             return saldo;
@@ -70,11 +77,12 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
      * @return saldo
      */
     public float realizarSaque(int numConta, float saque)
-        throws java.rmi.RemoteException{
+        throws java.rmi.RemoteException, InterruptedException{
             float saldo;
 
             saldo = contas.get(numConta).getSaldo();
             saldo = saldo - saque;
+            Thread.sleep(10000);
             contas.get(numConta).setSaldo(saldo); //atualiza saldo
 
             return saldo;
@@ -90,9 +98,10 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
      * @param valorTransferencia 
      */
     public void realizarTransferencia(int numConta1, int numConta2, float valorTransferencia)
-        throws java.rmi.RemoteException{
+        throws java.rmi.RemoteException, InterruptedException{
             float saldoConta1 = contas.get(numConta1).getSaldo() - valorTransferencia;
             float saldoConta2 = contas.get(numConta2).getSaldo() + valorTransferencia;
+            Thread.sleep(10000);
             contas.get(numConta1).setSaldo(saldoConta1);
             contas.get(numConta2).setSaldo(saldoConta2);
     }
@@ -143,6 +152,144 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
               //      + "-" + conta3.getNumConta() + "\n");
         
     }
+    
+    /*
+         -- Controle de Concorrência --
+    */
+    
+    public String recebeDadosCliente(int opcao, int idCliente,
+             ArrayList<Integer> idContasSelecionadas, float valor) 
+            throws RemoteException, InterruptedException{ 
+        
+        String retorno = "";
+            
+            Requisicao requisicao = new Requisicao();
+            requisicao.setOpcaoOperacao(opcao);
+            requisicao.setIdCliente(idCliente);
+            requisicao.setValor(valor);
+            
+            /*IRepositorioServer repositorio = (IRepositorioServer) 
+                    Naming.lookup("//127.0.0.1:1099/RepositorioServer");*/
+            
+            for(Integer idConta : idContasSelecionadas){
+                
+                    Conta conta = encontraConta(idConta);
+                    requisicao.getContasSelecionadas().add(conta);
+                  
+            }
+        
+            retorno = executaRequisicao(requisicao);
+        
+        return retorno;
+        
+    }
+
+    
+    public String executaRequisicao(Requisicao requisicao) 
+            throws RemoteException, InterruptedException{
+        
+        String retorno;
+        
+        //se a operação for de consulta
+        if((requisicao.getOpcaoOperacao() == 1) &&
+                (retornaVerdadeiroSeRequisicaoLiberadaLeitura(requisicao))){
+            requisicao.getContasSelecionadas().get(0).setBloqueadoLeitura(true);
+            retorno = consultarSaldo(requisicao.getContasSelecionadas().get(0).getNumConta());
+            requisicao.getContasSelecionadas().get(0).setBloqueadoLeitura(false);
+            
+        }
+        
+        //se for outro tipo de operação
+        else if((requisicao.getOpcaoOperacao() != 1) &&
+                (retornaVerdadeiroSeRequisicaoLiberadaEscrita(requisicao))){
+            
+            for (Conta conta : requisicao.getContasSelecionadas()){
+                conta.setBloqueadoEscrita(true);
+            }
+            switch(requisicao.getOpcaoOperacao()){
+                case 2:
+                    realizarDeposito(requisicao.getContasSelecionadas().get(0).getNumConta(),
+                        requisicao.getValor());
+                    break;
+                case 3:
+                    realizarSaque(requisicao.getContasSelecionadas().get(0).getNumConta(),
+                        requisicao.getValor());
+                    break;
+                case 4: 
+                    realizarTransferencia(
+                            requisicao.getContasSelecionadas().get(0).getNumConta(),
+                            requisicao.getContasSelecionadas().get(1).getNumConta(),
+                            requisicao.getValor());  
+                    break;
+                default:
+                    System.out.println("Opção inválida para o gerenciador.");
+                    break;
+            }
+            for (Conta conta : requisicao.getContasSelecionadas()){
+                conta.setBloqueadoEscrita(false);
+            }
+        }
+        else{
+            enfileiraRequisicao(requisicao);
+        }
+        
+        retorno = consultarSaldo(requisicao.getContasSelecionadas().get(0).getNumConta());
+        return retorno;
+    }
+
+    public void enfileiraRequisicao(Requisicao requisicao) 
+            throws InterruptedException, RemoteException{        
+        for (Conta conta : requisicao.getContasSelecionadas()){
+                conta.getFila().insereRequisicao(requisicao);
+                verificaFila(conta.getFila());
+            }
+    }
+    
+    
+    public Boolean retornaVerdadeiroSeRequisicaoLiberadaEscrita(Requisicao requisicao){
+        Boolean requisicaoLiberada = true;
+        for (Conta conta : requisicao.getContasSelecionadas()){
+            if(conta.isBloqueadoEscrita() || conta.isBloqueadoLeitura()){
+                requisicaoLiberada = false;
+            }
+        }
+        return requisicaoLiberada;
+    }
+    
+    public Boolean retornaVerdadeiroSeRequisicaoLiberadaLeitura(Requisicao requisicao){
+        Boolean requisicaoLiberada = true;
+        for (Conta conta : requisicao.getContasSelecionadas()){
+            System.out.println("entrou no for");
+            System.out.println("conta.isBloqueadoEscrita [true]: " + conta.isBloqueadoEscrita());
+            if(conta.isBloqueadoEscrita()){
+                System.out.println("entrou no if");
+                requisicaoLiberada = false;
+            }
+        }
+        return requisicaoLiberada;
+    }
+    
+    public void verificaFila(Fila fila) 
+            throws InterruptedException, RemoteException{
+        while(!fila.verificaListaVazia()){
+            System.out.println("-- entrou na fila");
+            //espera 30 segundos
+            Thread.sleep(20000);
+            Requisicao requisicao = fila.retornaPrimeiroFila();
+            
+            if((requisicao.getOpcaoOperacao() == 1) &&
+                retornaVerdadeiroSeRequisicaoLiberadaLeitura(requisicao)){
+               executaRequisicao(requisicao);
+               fila.removeRequisicao();
+            }
+            else if((requisicao.getOpcaoOperacao() != 1) &&
+                (retornaVerdadeiroSeRequisicaoLiberadaEscrita(requisicao))){
+                executaRequisicao(requisicao); 
+                fila.removeRequisicao();
+            }
+        }
+    }
+    
     
 }
 

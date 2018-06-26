@@ -1,5 +1,7 @@
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,7 +25,7 @@ public class Conta implements Serializable{
     private Fila fila = new Fila();
     
 
-    public Conta() {
+    public Conta(){
     }
 
     public int getNumConta() {

@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author akina
  */
-public class Requisicao {
+public class Requisicao{
     
     private Integer opcaoOperacao;
     private Integer idCliente;

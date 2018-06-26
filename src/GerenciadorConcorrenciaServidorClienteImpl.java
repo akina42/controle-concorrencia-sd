@@ -71,7 +71,7 @@ public class GerenciadorConcorrenciaServidorClienteImpl
         
         //se a operação for de consulta
         if((requisicao.getOpcaoOperacao() == 1) &&
-                retornaVerdadeiroSeRequisicaoLiberadaLeitura(requisicao)){
+                (retornaVerdadeiroSeRequisicaoLiberadaLeitura(requisicao))){
             requisicao.getContasSelecionadas().get(0).setBloqueadoLeitura(true);
             retorno = repositorio.consultarSaldo(requisicao.getContasSelecionadas().get(0).getNumConta());
             requisicao.getContasSelecionadas().get(0).setBloqueadoLeitura(false);
@@ -137,7 +137,10 @@ public class GerenciadorConcorrenciaServidorClienteImpl
     public Boolean retornaVerdadeiroSeRequisicaoLiberadaLeitura(Requisicao requisicao){
         Boolean requisicaoLiberada = true;
         for (Conta conta : requisicao.getContasSelecionadas()){
+            System.out.println("entrou no for");
+            System.out.println("conta.isBloqueadoEscrita [true]: " + conta.isBloqueadoEscrita());
             if(conta.isBloqueadoEscrita()){
+                System.out.println("entrou no if");
                 requisicaoLiberada = false;
             }
         }
@@ -163,11 +166,6 @@ public class GerenciadorConcorrenciaServidorClienteImpl
             }
         }
     }
-    
-    /*public void testeDadoRecebido(int valor, int id, ArrayList<Integer> array, float val)
-        throws RemoteException{
-            System.out.println("Dado recebido: " + valor + id + array.get(0) + val);
-    }*/
     
 
 }
