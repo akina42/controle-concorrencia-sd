@@ -10,7 +10,7 @@ import java.util.Scanner;
  *
  * @author marcos
  */
-public class Cliente2 {
+public class Cliente3 {
     
 
     public static void main(String[] args){ 
@@ -22,7 +22,7 @@ public class Cliente2 {
             Scanner entrada = new Scanner(System.in);
             
             ArrayList<Integer> contasSelecionadas = new ArrayList<>();
-            int id = 2;
+            int id = 3;
             int conta=0, contadest=0;
             float valor=0;
             String consulta;
@@ -80,7 +80,7 @@ public class Cliente2 {
             }
             
         }catch(Exception e){
-             System.out.println("Erro na classe Cliente2: " + e);    
+             System.out.println("Erro na classe Cliente3: " + e);    
         }
    
     }

@@ -23,9 +23,8 @@ public class RepositorioServer {
         try {
             IRepositorioServer server = new RepositorioServerImpl();
             Naming.rebind("//127.0.0.1:1099/RepositorioServer", server);
-            System.out.println("\nSERVIDOR");
+            System.out.println("\nSERVIDOR INICIALIZADO");
             server.preencheRepositorio();
-            //System.out.println("Repositorio Preenchido com dados!");
         } catch (Exception e) {
             System.out.println("Erro na classe RepositorioServer: " + e);
         }

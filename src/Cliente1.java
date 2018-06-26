@@ -28,7 +28,7 @@ public class Cliente1 {
             String consulta;
             
             
-            System.out.println("\n\tBEM VINDO! \n\t SELECIONE A OPERAÇÃO QUE DESEJA REALIZAR: \n");
+            System.out.println("\n\tBEM VINDO (A)! \n\t SELECIONE A OPERAÇÃO QUE DESEJA REALIZAR: \n");
             System.out.println("\t1 - Consultar Saldo");
             System.out.println("\t2 - Realizar Depósito");
             System.out.println("\t3 - Realizar Saque");
@@ -36,6 +36,7 @@ public class Cliente1 {
             System.out.println("\t5 - Sair");
             System.out.println("\tPor favor, digite sua opção: ");
             int opcao = entrada.nextInt();
+            System.out.println("\n");
             
             switch(opcao){
                 case 1: System.out.println("\tPor favor, digite o numero da conta: ");

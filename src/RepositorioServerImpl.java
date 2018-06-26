@@ -40,7 +40,7 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
                     "SALDO: " + contas.get(numConta).getSaldo() + "\n\n";
             //System.out.println(dadosConta);
             
-            Thread.sleep(10000);
+            Thread.sleep(20000);
 
             return dadosConta;
     }
@@ -61,7 +61,7 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
 
             saldo = contas.get(numConta).getSaldo();
             saldo = saldo + deposito;
-            Thread.sleep(10000);
+            Thread.sleep(20000);
             contas.get(numConta).setSaldo(saldo); //atualiza saldo
 
             return saldo;
@@ -82,7 +82,7 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
 
             saldo = contas.get(numConta).getSaldo();
             saldo = saldo - saque;
-            Thread.sleep(10000);
+            Thread.sleep(20000);
             contas.get(numConta).setSaldo(saldo); //atualiza saldo
 
             return saldo;
@@ -101,7 +101,7 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
         throws java.rmi.RemoteException, InterruptedException{
             float saldoConta1 = contas.get(numConta1).getSaldo() - valorTransferencia;
             float saldoConta2 = contas.get(numConta2).getSaldo() + valorTransferencia;
-            Thread.sleep(10000);
+            Thread.sleep(20000);
             contas.get(numConta1).setSaldo(saldoConta1);
             contas.get(numConta2).setSaldo(saldoConta2);
     }
@@ -251,6 +251,7 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
         for (Conta conta : requisicao.getContasSelecionadas()){
             if(conta.isBloqueadoEscrita() || conta.isBloqueadoLeitura()){
                 requisicaoLiberada = false;
+                System.out.println("-- conta bloqueada para escrita");
             }
         }
         return requisicaoLiberada;
@@ -259,11 +260,9 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
     public Boolean retornaVerdadeiroSeRequisicaoLiberadaLeitura(Requisicao requisicao){
         Boolean requisicaoLiberada = true;
         for (Conta conta : requisicao.getContasSelecionadas()){
-            System.out.println("entrou no for");
-            System.out.println("conta.isBloqueadoEscrita [true]: " + conta.isBloqueadoEscrita());
             if(conta.isBloqueadoEscrita()){
-                System.out.println("entrou no if");
                 requisicaoLiberada = false;
+                System.out.println("-- conta bloqueada para leitura");
             }
         }
         return requisicaoLiberada;
@@ -272,9 +271,9 @@ public class RepositorioServerImpl extends java.rmi.server.UnicastRemoteObject i
     public void verificaFila(Fila fila) 
             throws InterruptedException, RemoteException{
         while(!fila.verificaListaVazia()){
-            System.out.println("-- entrou na fila");
+            System.out.println("-- requisicao entrou na fila");
             //espera 30 segundos
-            Thread.sleep(20000);
+            Thread.sleep(10000);
             Requisicao requisicao = fila.retornaPrimeiroFila();
             
             if((requisicao.getOpcaoOperacao() == 1) &&
